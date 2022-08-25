@@ -3,8 +3,10 @@ import { ref } from 'vue'
 import emitter from '../../EventBus'
 import VideoComponent from '../sources/VideoComponent.vue'
 import MenuComponent from './MenuComponent.vue'
+import TagsListComponent from '../Tags/TagsListComponent.vue'
+import FormComponent from '../Form/FormComponent.vue'
 
-const tagsList = ref([
+const tagsList = [
   { value: 'dog' },
   { value: 'adorable' },
   { value: 'funny dogs' },
@@ -15,18 +17,16 @@ const tagsList = ref([
   { value: 'jokes' },
   { value: 'computers' },
   { value: 'mr robot' }
-])
+]
 
 const inputSearch = ref('')
 
-const onSubmitInput = () => {
-  if (!inputSearch.value) return
-  emitter.emit('on-input-search', inputSearch.value)
-}
+const onHandleSubmit = queryString => {
+  if (!queryString) return
 
-const onClickTag = tag => {
-  inputSearch.value = tag
-  onSubmitInput()
+  inputSearch.value = queryString
+
+  emitter.emit('on-input-search', inputSearch.value)
 }
 </script>
 
@@ -41,26 +41,13 @@ const onClickTag = tag => {
     <MenuComponent screen-position="top" />
 
     <!-- Search component -->
-    <div
-      class="flex flex-col items-center w-full px-5 py-10 md:py-5 md:mt-10 lg:mt-10">
-      <form @submit.prevent="onSubmitInput" class="w-full max-w-screen-md">
-        <input
-          v-model="inputSearch"
-          type="text"
-          placeholder="Find adorable puppies!"
-          class="w-full max-w-screen-md px-5 py-3 border-4 rounded-md outline-none select-text border-amber-500 placeholder:text-amber-700 placeholder:font-bold focus:border-amber-300 focus:outline-2 focus:outline focus:outline-offset-4 focus:outline-blue-500" />
-      </form>
+    <div class="flex w-full flex-col items-center px-5 py-10 md:mt-10 md:py-5 lg:mt-10">
+      <FormComponent v-model:search="inputSearch" @on-submit="onHandleSubmit" />
 
       <!-- tags container -->
       <div
-        class="flex flex-wrap justify-start w-full h-auto max-w-screen-md py-3 md:px-0 md:justify-start hover:cursor-pointer">
-        <div
-          v-for="tag in tagsList"
-          :key="tag.id"
-          @click="onClickTag(tag.value)"
-          class="flex items-center px-3 py-1 mt-2 mr-1 text-sm font-bold text-white rounded shadow bg-slate-800 hover:bg-slate-500 h-fit md:mb-0">
-          {{ tag.value }}
-        </div>
+        class="flex h-auto w-full max-w-screen-md flex-wrap justify-start py-3 hover:cursor-pointer md:justify-start md:px-0">
+        <TagsListComponent :tags-list="tagsList" @on-click="onHandleSubmit" />
       </div>
     </div>
   </header>

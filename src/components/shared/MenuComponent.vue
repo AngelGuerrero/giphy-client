@@ -12,6 +12,21 @@ defineProps({
 })
 
 const title = 'Pinkas'
+
+const menuList = [
+  {
+    name: 'New post',
+    path: '#'
+  },
+  {
+    name: 'Sign In',
+    path: '#'
+  },
+  {
+    name: 'Sign Up',
+    path: '#'
+  }
+]
 </script>
 
 <template>
@@ -47,16 +62,10 @@ const title = 'Pinkas'
         {{ title }}
       </li>
       <li
+        v-for="item in menuList"
+        :key="item.name"
         class="flex items-center justify-center p-5 text-sm text-zinc-400 hover:underline underline-offset-8 hover:cursor-pointer grow">
-        <a href="">New post</a>
-      </li>
-      <li
-        class="flex items-center justify-center p-5 text-sm text-zinc-400 hover:underline underline-offset-8 hover:cursor-pointer grow">
-        <a href="">Sign in</a>
-      </li>
-      <li
-        class="flex items-center justify-center p-5 text-sm text-zinc-400 hover:underline underline-offset-8 hover:cursor-pointer grow">
-        <a href="">Sign up</a>
+        <a href="#">{{ item.name }}</a>
       </li>
     </ul>
   </menu>

@@ -12,14 +12,13 @@ const count = ref(0)
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold text-center text-white">{{ msg }}</h1>
+  <h1 class="text-center text-3xl font-bold text-white">{{ msg }}</h1>
 
   <div class="flex flex-col items-center">
     <button
       type="button"
       @click="count++"
-      class="px-4 py-1 my-4 text-white bg-gray-900 border border-indigo-600 rounded"
-    >
+      class="my-4 rounded border border-indigo-600 bg-gray-900 px-4 py-1 text-white">
       count is {{ count }}
     </button>
   </div>

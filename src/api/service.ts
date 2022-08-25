@@ -30,7 +30,7 @@ class Service {
   }
 
   createParams(params): string {
-    console.log('params :>> ', params);
+    console.log('params :>> ', params)
     return new URLSearchParams(params).toString()
   }
 
